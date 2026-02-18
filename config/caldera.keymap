@@ -32,6 +32,7 @@
    &trans    &trans         &trans         &trans         &trans         &trans                 &trans    &trans    &trans      &trans     &trans     &trans
    &trans    &trans         &trans         &trans         &trans         &trans                 &trans    &trans    &trans      &kp MINUS  &kp EQUAL  &kp DEL
    &trans    &trans         &trans         &kp LPAR       &kp RPAR       &kp HOME               &kp END   &kp LBKT  &kp RBKT    &trans     &trans     &kp APOS
+   &trans    &trans         &trans         &trans         &trans         &trans                 &trans    &trans    &trans      &trans     &trans     &trans
                         >;
                 };
                 high_layer {
@@ -44,8 +45,7 @@
    &kp GRAVE &kp F1    &kp F2    &kp F3     &kp F4     &kp F5              &kp F6    &kp F7    &kp F8     &kp F9     &kp F10    &kp BSPC
    &trans    &trans    &kp UP    &trans     &trans     &kp F11               &kp F12     &trans    &trans     &trans     &trans     &trans
    &trans    &kp LEFT  &kp DOWN  &kp RIGHT  &trans     &trans               &trans     &trans    &trans     &kp MINUS  &kp EQUAL  &kp DEL
-   &trans    &trans    &trans    &kp LPAR   &kp RPAR   &kp HOME             &kp END    &kp LBKT  &kp RBKT   &trans     &trans     &kp APOS
-                        >;
+   &trans    &trans    &trans    &kp LPAR   &kp RPAR   &kp HOME             &kp END    &kp LBKT  &kp RBKT   &trans     &trans     &kp APOS   &trans    &trans    &trans    &trans     &trans     &trans               &trans     &trans    &trans     &trans     &trans     &trans                        >;
                 };
         };
 };
