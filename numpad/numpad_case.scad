@@ -89,7 +89,7 @@ for (c = [0 : cols - 1]) {
                 translate([x, y, -0.1])
                     linear_extrude(plate_thickness + 0.2)
                         if (c == cols - 1 && r == rows - 1)
-                            circle(r = 3.5, $fn = 64);  // potentiometer hole
+                            circle(r = 3.75, $fn = 64);  // encoder shaft hole (7.5mm diameter)
                         else
                             square([switch_cutout, switch_cutout], center=true);
             }
