@@ -10,7 +10,7 @@
 //                    centre post
 //
 //                       O  (0,    -5.9)  pin 1
-//                              O  (+5.0, -3.8)  pin 2
+//                 O  (-5.0, -3.8)  pin 2
 //
 //  Support legs:  Y = 0,     X = ±5.5mm
 //  Centre post:   (0, 0)
@@ -52,7 +52,7 @@ post_d          =  3.4;   // body ~3.2mm + 0.2mm clearance
 pin1_x          =  0.0;
 pin1_y          = -5.9;   // directly below centre post
 
-pin2_x          =  5.0;   // 5.0mm to the right of pin 1
+pin2_x          = -5.0;   // 5.0mm to the left of pin 1
 pin2_y          = -3.8;   // 3.8mm below centre post
 
 pin_d           =  1.4;   // body ~1.2mm + 0.2mm clearance
