@@ -33,7 +33,7 @@ pad_x           = 6;
 pad_y           = 6;
 switch_cutout   = 13.8;
 fillet_r        = 2.0;
-plate_thickness = 1.2;
+plate_thickness = 1.5;
 
 board_w = (cols - 1) * key_pitch + switch_cutout + pad_x * 2;
 board_h = (rows - 1) * key_pitch + switch_cutout + pad_y * 2;
@@ -43,10 +43,10 @@ board_h = (rows - 1) * key_pitch + switch_cutout + pad_y * 2;
 // Support legs — same Y axis as centre post
 leg_x           =  5.5;   // ±5.5mm from centre post
 leg_y           =  0.0;
-leg_d           =  2.0;   // body ~1.9mm + 0.1mm clearance
+leg_d           =  2.3;   // body ~1.9mm + 0.4mm clearance
 
 // Centre locating post
-post_d          =  3.4;   // body ~3.2mm + 0.2mm clearance
+post_d          =  3.7;   // body ~3.2mm + 0.5mm clearance
 
 // Signal pins — staggered, not on the same row
 pin1_x          =  0.0;
@@ -55,7 +55,7 @@ pin1_y          = -5.9;   // directly below centre post
 pin2_x          = -5.0;   // 5.0mm to the left of pin 1
 pin2_y          = -3.8;   // 3.8mm below centre post
 
-pin_d           =  1.4;   // body ~1.2mm + 0.2mm clearance
+pin_d           =  1.7;   // body ~1.2mm + 0.5mm clearance
 
 // ---- Encoder shaft hole ------------------------------------
 encoder_shaft_d = 7.5;

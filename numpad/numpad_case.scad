@@ -40,7 +40,7 @@ module rounded_rect(w, h, r) {
 //         |________\
 //
 module ridge() {
-    translate([0, -ridge_width/2, 0])
+    translate([0, ridge_width/2, 0])
         rotate([90, 0, 0])
             linear_extrude(ridge_width)
                 polygon([
@@ -57,13 +57,13 @@ module snap_ridges() {
     // Front wall (inner face at Y = -board_h/2 + wall_thickness)
     // protrudes inward = +Y direction → rotate ridge to point +Y
     translate([0, -board_h/2 + wall_thickness, z])
-        rotate([0, 0, -90])
+        rotate([0, 0, 90])
             ridge();
 
     // Back wall (inner face at Y = +board_h/2 - wall_thickness)
     // protrudes inward = -Y direction
     translate([0, board_h/2 - wall_thickness, z])
-        rotate([0, 0, 90])
+        rotate([0, 0, -90])
             ridge();
 
     // Left wall (inner face at X = -board_w/2 + wall_thickness)
