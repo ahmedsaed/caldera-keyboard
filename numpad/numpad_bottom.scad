@@ -1,6 +1,6 @@
 // ============================================================
 //  Caldera Numpad — Bottom Plate
-//  Flat plate + potentiometer housing + snap clips (inward)
+//  Flat plate + EC11 encoder housing + snap clips (inward)
 // ============================================================
 
 key_pitch        = 18.75;
@@ -13,10 +13,19 @@ fillet_r         = 2.0;
 wall_thickness   = 2.5;
 plate_thickness  = 1.2;
 
-pot_inner_r      = 16.5 / 2;
-pot_wall         = 2.0;
-pot_outer_r      = pot_inner_r + pot_wall;
-pot_height       = 3.5;
+// EC11 Rotary Encoder Housing — corner post design
+// Four L-shaped posts grip the encoder at its corners.
+// All four sides are fully open: pins and legs are accessible for hand-wiring.
+enc_body_w       = 11.7;   // encoder body width  (X), from datasheet
+enc_body_d       = 12.0;   // encoder body depth  (Y), from datasheet
+enc_tolerance    = 0.1;    // clearance per side
+enc_corner       = 3.0;    // ADJUST: how far each L-post wraps along each edge
+enc_wall         = 1.5;    // L-post wall thickness (outward from body face)
+enc_height       = 5.0;    // post height above plate surface
+
+// Derived — inner slot dimensions (body + tolerance)
+enc_slot_w       = enc_body_w + enc_tolerance * 2;
+enc_slot_d       = enc_body_d + enc_tolerance * 2;
 
 // Snap clip (must match numpad_case.scad)
 ridge_height     = 1.2;
@@ -42,14 +51,53 @@ module bottom_plate() {
         rounded_rect(board_w, board_h, fillet_r);
 }
 
-// Pot housing goes UPWARD (into the case), closed bottom = plate itself
-module pot_housing() {
-    translate([pot_x, pot_y, plate_thickness])
-        difference() {
-            cylinder(h = pot_height, r = pot_outer_r, $fn = 64);
-            translate([0, 0, -0.1])
-                cylinder(h = pot_height + 0.2, r = pot_inner_r, $fn = 64);
-        }
+// EC11 encoder housing — four L-shaped corner posts.
+//
+// Top view of one corner (bottom-left shown, others are mirrors):
+//
+//   +--+
+//   |  |  <- enc_wall (outward thickness)
+//   +--+--...open...
+//      |  <- enc_wall
+//      +
+//
+// The encoder body drops in from above; the four corners locate it in X and Y.
+// All four sides between the posts are fully open for pin/leg access.
+// No bottom floor — encoder rests directly on the plate surface.
+// No shaft hole needed (shaft points up through the open top).
+//
+// enc_corner controls how far each leg of the L extends along the encoder edge.
+// Increase it for a tighter grip; decrease it to open up more side access.
+
+module enc_corner_post(sx, sy) {
+    // sx, sy: +1 or -1 — selects which corner
+    // Post origin is at the outer corner; L-arms extend inward along each axis.
+    translate([pot_x + sx * (enc_slot_w/2 + enc_wall),
+               pot_y + sy * (enc_slot_d/2 + enc_wall),
+               plate_thickness]) {
+        // Arm along X direction (runs parallel to X axis)
+        translate([sx < 0 ? 0 : -(enc_corner + enc_wall),
+                   sy < 0 ? 0 : -enc_wall,
+                   0])
+            cube([enc_corner + enc_wall,
+                  enc_wall,
+                  enc_height]);
+
+        // Arm along Y direction (runs parallel to Y axis)
+        translate([sx < 0 ? 0 : -enc_wall,
+                   sy < 0 ? 0 : -(enc_corner + enc_wall),
+                   0])
+            cube([enc_wall,
+                  enc_corner + enc_wall,
+                  enc_height]);
+    }
+}
+
+module encoder_housing() {
+    enc_corner_post(-1, -1);  // front-left
+    enc_corner_post( 1, -1);  // front-right
+    enc_corner_post(-1,  1);  // back-left
+    enc_corner_post( 1,  1);  // back-right
 }
 
 // --- Single clip arm + hook ---------------------------------
@@ -113,7 +161,7 @@ module snap_clips() {
 
 module numpad_bottom() {
     color("SlateGray")      bottom_plate();
-    color("DimGray")        pot_housing();
+    color("DimGray")        encoder_housing();
     color("CornflowerBlue") snap_clips();
 }
 
