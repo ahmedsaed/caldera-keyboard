@@ -26,17 +26,20 @@
 // ============================================================
 
 // ---- Shared dimensions (must match numpad_case.scad) -------
-key_pitch       = 18.75;
+pitch_x         = 18.75;  // cx + spacing (18 + 0.75)
+pitch_y         = 17.75;  // cy + spacing (17 + 0.75)
 cols            = 4;
 rows            = 4;
 pad_x           = 6;
 pad_y           = 6;
-switch_cutout   = 13.8;
+wall_thickness  = 2.5;
+switch_cutout   = 14;
 fillet_r        = 2.0;
 plate_thickness = 1.5;
 
-board_w = (cols - 1) * key_pitch + switch_cutout + pad_x * 2;
-board_h = (rows - 1) * key_pitch + switch_cutout + pad_y * 2;
+// Plate fits inside the case walls — use inner (not outer) dimensions
+board_w = (cols - 1) * pitch_x + switch_cutout + (pad_x - wall_thickness) * 2;
+board_h = (rows - 1) * pitch_y + switch_cutout + (pad_y - wall_thickness) * 2;
 
 // ---- Choc v1 (PG1350) hole dimensions ----------------------
 
@@ -98,8 +101,8 @@ module pcb_plate() {
 
         for (c = [0 : cols - 1]) {
             for (r = [0 : rows - 1]) {
-                x = (c - (cols - 1) / 2) * key_pitch;
-                y = (r - (rows - 1) / 2) * key_pitch;
+                x = (c - (cols - 1) / 2) * pitch_x;
+                y = (r - (rows - 1) / 2) * pitch_y;
 
                 translate([x, y, 0]) {
                     if (c == cols - 1 && r == rows - 1) {

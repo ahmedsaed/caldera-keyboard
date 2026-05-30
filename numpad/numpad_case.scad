@@ -3,10 +3,11 @@
 //  4x4 Choc switch plate + side walls + snap ridges (inward)
 // ============================================================
 
-switch_cutout    = 13.8;
+switch_cutout    = 14;
 cols             = 4;
 rows             = 4;
-key_pitch        = 18.75;
+pitch_x          = 18.75;  // cx + spacing (18 + 0.75)
+pitch_y          = 17.75;  // cy + spacing (17 + 0.75)
 plate_thickness  = 1.2;
 wall_thickness   = 2.5;
 wall_height      = 16.0;
@@ -14,14 +15,21 @@ fillet_r         = 2.0;
 pad_x            = 6;
 pad_y            = 6;
 
+// Back wall cutouts (left of the snap ridge)
+usb_cutout_w     = 12.0;  // USB-C width (X)
+usb_cutout_h     = 6.0;   // USB-C height (Z), from case floor up
+sw_cutout_w      = 8.0;   // power switch width (X)
+sw_cutout_h      = 3.5;   // power switch height (Z)
+cutout_gap       = 6.0;   // gap between the two cutouts
+
 // Snap ridge
 ridge_height     = 1.2;   // vertical thickness of the shelf
 ridge_depth      = 1.0;   // how far it sticks inward from the wall
 ridge_width      = 8.0;   // length along the wall
 ridge_z          = 3.0;   // Z of the TOP of the ridge from case bottom
 
-board_w = (cols - 1) * key_pitch + switch_cutout + pad_x * 2;
-board_h = (rows - 1) * key_pitch + switch_cutout + pad_y * 2;
+board_w = (cols - 1) * pitch_x + switch_cutout + pad_x * 2;
+board_h = (rows - 1) * pitch_y + switch_cutout + pad_y * 2;
 
 module rounded_rect(w, h, r) {
     offset(r=r) offset(r=-r) square([w, h], center=true);
@@ -84,8 +92,8 @@ module plate() {
             rounded_rect(board_w, board_h, fillet_r);
 for (c = [0 : cols - 1]) {
             for (r = [0 : rows - 1]) {
-                x = (c - (cols - 1) / 2) * key_pitch;
-                y = (r - (rows - 1) / 2) * key_pitch;
+                x = (c - (cols - 1) / 2) * pitch_x;
+                y = (r - (rows - 1) / 2) * pitch_y;
                 translate([x, y, -0.1])
                     linear_extrude(plate_thickness + 0.2)
                         if (c == cols - 1 && r == rows - 1)
@@ -108,7 +116,15 @@ module walls() {
 }
 
 module numpad_case() {
-    color("SlateGray") walls();
+    color("SlateGray") difference() {
+        walls();
+        // Power switch cutout — 2mm left of the ridge, flush with floor
+        translate([-(ridge_width/2 + 2 + sw_cutout_w), board_h/2 - wall_thickness - 0.1, 0])
+            cube([sw_cutout_w, wall_thickness + 0.2, sw_cutout_h]);
+        // USB-C cutout — left of power switch with cutout_gap, flush with floor
+        translate([-(ridge_width/2 + 2 + sw_cutout_w + cutout_gap + usb_cutout_w), board_h/2 - wall_thickness - 0.1, 0])
+            cube([usb_cutout_w, wall_thickness + 0.2, usb_cutout_h]);
+    }
     color("SlateGray") snap_ridges();
     color("DimGray")   translate([0, 0, wall_height]) plate();
 }

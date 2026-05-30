@@ -3,12 +3,13 @@
 //  Flat plate + EC11 encoder housing + snap clips (inward)
 // ============================================================
 
-key_pitch        = 18.75;
+pitch_x          = 18.75;  // cx + spacing (18 + 0.75)
+pitch_y          = 17.75;  // cy + spacing (17 + 0.75)
 cols             = 4;
 rows             = 4;
 pad_x            = 6;
 pad_y            = 6;
-switch_cutout    = 13.8;
+switch_cutout    = 14;
 fillet_r         = 2.0;
 wall_thickness   = 2.5;
 plate_thickness  = 1.2;
@@ -36,11 +37,11 @@ clip_thickness   = 1.2;
 clip_gap         = 0.3;
 clip_height      = ridge_z + ridge_height + 1.0;
 
-board_w = (cols - 1) * key_pitch + switch_cutout + pad_x * 2;
-board_h = (rows - 1) * key_pitch + switch_cutout + pad_y * 2;
+board_w = (cols - 1) * pitch_x + switch_cutout + pad_x * 2;
+board_h = (rows - 1) * pitch_y + switch_cutout + pad_y * 2;
 
-pot_x = ((cols - 1) / 2) * key_pitch;
-pot_y = ((rows - 1) / 2) * key_pitch;
+pot_x = ((cols - 1) / 2) * pitch_x;
+pot_y = ((rows - 1) / 2) * pitch_y;
 
 module rounded_rect(w, h, r) {
     offset(r=r) offset(r=-r) square([w, h], center=true);
