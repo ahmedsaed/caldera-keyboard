@@ -38,18 +38,18 @@ fillet_r        = 2.0;
 plate_thickness = 1.5;
 
 // Plate fits inside the case walls — use inner (not outer) dimensions
-board_w = (cols - 1) * pitch_x + switch_cutout + (pad_x - wall_thickness) * 2;
-board_h = (rows - 1) * pitch_y + switch_cutout + (pad_y - wall_thickness) * 2;
+board_w = (cols - 1) * pitch_x + switch_cutout + (pad_x - wall_thickness) * 2 - 0.2;  // -0.2 for clearance
+board_h = (rows - 1) * pitch_y + switch_cutout + (pad_y - wall_thickness) * 2 - 0.2;  // -0.2 for clearance
 
 // ---- Choc v1 (PG1350) hole dimensions ----------------------
 
 // Support legs — same Y axis as centre post
 leg_x           =  5.5;   // ±5.5mm from centre post
 leg_y           =  0.0;
-leg_d           =  2.3;   // body ~1.9mm + 0.4mm clearance
+leg_d           =  2.2;   // body ~1.9mm + 0.3mm clearance
 
 // Centre locating post
-post_d          =  3.7;   // body ~3.2mm + 0.5mm clearance
+post_d          =  3.6;   // body ~3.2mm + 0.4mm clearance
 
 // Signal pins — staggered, not on the same row
 pin1_x          =  0.0;
@@ -58,7 +58,7 @@ pin1_y          = -5.9;   // directly below centre post
 pin2_x          = -5.0;   // 5.0mm to the left of pin 1
 pin2_y          = -3.8;   // 3.8mm below centre post
 
-pin_d           =  1.7;   // body ~1.2mm + 0.5mm clearance
+pin_d           =  3.1;   // hot-swap socket leg press-fit diameter + 0.2mm clearance
 
 // ---- Encoder shaft hole ------------------------------------
 encoder_shaft_d = 7.5;
